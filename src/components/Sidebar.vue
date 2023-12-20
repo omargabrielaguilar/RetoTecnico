@@ -1,87 +1,87 @@
-<!-- En el archivo Sidebar.vue -->
 <template>
-    <side class="sidebar">
-        <div class="logo">
-            <img src="/logo.png" alt="logo" class="logo-image" />
-        </div>
-        <ul>
-            <li :class="{ 'active': isRouteActive('/') }" @click="navigateToHome">Home</li>
-            <li :class="{ 'active': isRouteActive('/vista/1') }" @click="navigateToView(1)">Vista 1</li>
-            <li :class="{ 'active': isRouteActive('/vista/2') }" @click="navigateToView(2)">Vista 2</li>
-        </ul>
-    </side>
-</template>
+    <div class="sidebar">
+      <div class="logo">
+        <img src="/logo.png" alt="logo" class="logo-image" />
+      </div>
+      <ul>
+        <li :class="{ 'active': isRouteActive('/') }" @click="navigateToHome">Home</li>
+        <li :class="{ 'active': isRouteActive('/vista/1') }" @click="navigateToView(1)">Vista 1</li>
+        <li :class="{ 'active': isRouteActive('/vista/2') }" @click="navigateToView(2)">Vista 2</li>
+      </ul>
+    </div>
+  </template>
   
-<script>
-export default {
+  <script>
+  export default {
     methods: {
-        navigateToHome() {
-            this.$router.push('/');
-            console.log('Navegar a la página de inicio');
-        },
-        navigateToView(viewNumber) {
-            // Lógica para navegar a Vista 1 o Vista 2 según el parámetro viewNumber
-            console.log(`Navegar a Vista ${viewNumber}`);
-            this.$router.push(`/vista/${viewNumber}`);
-        },
-        isRouteActive(route) {
-            return this.$route.path === route;
-        },
-    }
-};
-</script>
+      navigateToHome() {
+        this.$router.push('/');
+        console.log('Navegar a la página de inicio');
+      },
+      navigateToView(viewNumber) {
+        console.log(`Navegar a Vista ${viewNumber}`);
+        this.$router.push(`/vista/${viewNumber}`);
+      },
+      isRouteActive(route) {
+        return this.$route.path === route;
+      },
+    },
+  };
+  </script>
   
-
-<style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;700&display=swap');
-
-.sidebar {
+  <style scoped>
+  @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;700&display=swap');
+  
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 20vw;
     height: 100vh;
     background-color: #676767;
     padding: 10px;
     box-sizing: border-box;
     font-family: 'Raleway', sans-serif;
-}
-
-.logo {
+    z-index: 1; /* Agregado para asegurarse de que el sidebar esté sobre otros elementos */
+    overflow-y: auto; /* Agregado para permitir el desplazamiento si hay muchos elementos en la lista */
+  }
+  
+  .logo {
     display: flex;
     margin-bottom: 2em;
     justify-content: center;
-}
-
-.logo-image {
+  }
+  
+  .logo-image {
     width: 60%;
-}
-
-ul {
+  }
+  
+  ul {
     list-style-type: none;
     padding: 0;
-    /* Asegúrate de que no haya relleno */
     margin: 0;
-    /* Asegúrate de que no haya margen */
     display: flex;
     flex-direction: column;
     gap: 1rem;
-}
-
-li {
+  }
+  
+  li {
     font-size: 1.4rem;
     color: white;
     font-weight: bold;
     cursor: pointer;
     border-bottom: none;
     padding: 8px 20px;
-
-}
-
-li:hover {
+  }
+  
+  li:hover {
     background-color: white;
     color: #676767;
-}
-
-li.active {
+  }
+  
+  li.active {
     background-color: white;
     color: #676767;
-}
-</style>
+  }
+  </style>
+  
