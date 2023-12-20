@@ -2,7 +2,7 @@
 <template>
     <div class="sidebar">
         <div class="logo">
-            <img src="../../public/logo.png" alt="logo" class="logo" />
+            <img src="/logo.png" alt="logo" class="logo-image" />
         </div>
         <ul>
             <li @click="navigateToHome">Home</li>
@@ -27,39 +27,49 @@ export default {
 };
 </script>
   
+
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;700&display=swap');
+
 .sidebar {
-    width: 200px;
-    background-color: #f0f0f0;
+    width: 20vw;
+    height: 100vh;
+    background-color: #676767;
     padding: 10px;
+    box-sizing: border-box;
+    font-family: 'Raleway', sans-serif;
 }
 
 .logo {
-    text-align: center;
-    margin-bottom: 20px;
+    display: flex;
+    margin-bottom: 2em;
+    justify-content: center;
 }
 
 .logo-image {
-    width: 50%;
-    /* Ajusta el ancho según sea necesario */
-    max-width: 120px;
-    /* Evita que la imagen sea demasiado grande */
+    width: 60%;
 }
 
 ul {
     list-style-type: none;
-    padding: 0;
-    margin: 0;
+    padding: 0; /* Asegúrate de que no haya relleno */
+    margin: 0; /* Asegúrate de que no haya margen */
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
 
 li {
+    font-size: 1.4rem;
+    color: white;
+    font-weight: bold;
     cursor: pointer;
-    padding: 8px;
     border-bottom: none;
+    padding: 8px 20px; 
+    
 }
 
 li:hover {
     background-color: white;
-}
-</style>
-  
+    color: #676767;
+}</style>

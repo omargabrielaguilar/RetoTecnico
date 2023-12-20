@@ -19,12 +19,12 @@ export default {
 </script>
 
 <style>
+body {
+  margin: 0;
+  padding: 0;
+}
 #app {
   display: flex;
 }
 
-main {
-  flex: 1;
-  padding: 20px;
-}
 </style>
