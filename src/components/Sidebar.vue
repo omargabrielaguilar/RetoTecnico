@@ -1,27 +1,31 @@
 <!-- En el archivo Sidebar.vue -->
 <template>
-    <div class="sidebar">
+    <side class="sidebar">
         <div class="logo">
             <img src="/logo.png" alt="logo" class="logo-image" />
         </div>
         <ul>
-            <li @click="navigateToHome">Home</li>
-            <li @click="navigateToView(1)">Vista 1</li>
-            <li @click="navigateToView(2)">Vista 2</li>
+            <li :class="{ 'active': isRouteActive('/') }" @click="navigateToHome">Home</li>
+            <li :class="{ 'active': isRouteActive('/vista/1') }" @click="navigateToView(1)">Vista 1</li>
+            <li :class="{ 'active': isRouteActive('/vista/2') }" @click="navigateToView(2)">Vista 2</li>
         </ul>
-    </div>
+    </side>
 </template>
   
 <script>
 export default {
     methods: {
         navigateToHome() {
-            // Lógica para navegar a la página de inicio
+            this.$router.push('/');
             console.log('Navegar a la página de inicio');
         },
         navigateToView(viewNumber) {
             // Lógica para navegar a Vista 1 o Vista 2 según el parámetro viewNumber
             console.log(`Navegar a Vista ${viewNumber}`);
+            this.$router.push(`/vista/${viewNumber}`);
+        },
+        isRouteActive(route) {
+            return this.$route.path === route;
         },
     }
 };
@@ -52,8 +56,10 @@ export default {
 
 ul {
     list-style-type: none;
-    padding: 0; /* Asegúrate de que no haya relleno */
-    margin: 0; /* Asegúrate de que no haya margen */
+    padding: 0;
+    /* Asegúrate de que no haya relleno */
+    margin: 0;
+    /* Asegúrate de que no haya margen */
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -65,11 +71,17 @@ li {
     font-weight: bold;
     cursor: pointer;
     border-bottom: none;
-    padding: 8px 20px; 
-    
+    padding: 8px 20px;
+
 }
 
 li:hover {
     background-color: white;
     color: #676767;
-}</style>
+}
+
+li.active {
+    background-color: white;
+    color: #676767;
+}
+</style>

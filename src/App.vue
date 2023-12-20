@@ -1,10 +1,7 @@
-<!-- En el archivo App.vue -->
 <template>
   <div id="app">
     <Sidebar />
-    <main>
-      <!-- Aquí irá el contenido principal -->
-    </main>
+    <router-view  class="content"/>
   </div>
 </template>
 
@@ -23,8 +20,15 @@ body {
   margin: 0;
   padding: 0;
 }
+
 #app {
   display: flex;
+  width: 100%;
+}
+
+.content {
+  flex-grow: 1;
+  overflow: auto; 
 }
 
 </style>
