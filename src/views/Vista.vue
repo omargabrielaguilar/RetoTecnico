@@ -1,6 +1,6 @@
 <template>
     <main>
-        <h1>HOLAAA :D, esta es la vista {{ $route.params.id }}</h1>
+        <h2>HOLAAA :D, esta es la vista {{ $route.params.id }}</h2>
 
     </main>
 </template>
@@ -12,11 +12,15 @@ export default {
 </script>
   
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;700&display=swap');
+
 main {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    background-color: aqua;
+    background-color: rgb(111, 199, 199);
+}
+
+h2 {
+    font-family: 'Raleway', sans-serif;
+    padding: 1rem 3rem;
 }
 </style>
   
