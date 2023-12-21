@@ -21,6 +21,7 @@ import { useQuery } from "@vue/apollo-composable";
 import gql from "graphql-tag";
 import CountryListCard from "@/components/CountryListCard.vue";
 import CountryCard from "@/components/CountryCard.vue";
+import ContinentFilter from "@/components/ContinentFilter.vue";
 import SearchCountry from "@/components/SearchCountry.vue";
 import "@/main.css";
 
