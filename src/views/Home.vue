@@ -9,7 +9,7 @@
     />
 
     <div v-if="loading">Cargando...</div>
-    <div v-else class="grid grid-cols-3 gap-1">
+    <div v-else class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1">
       <CountryListCard
         v-for="country in displayList"
         :key="country.code"
