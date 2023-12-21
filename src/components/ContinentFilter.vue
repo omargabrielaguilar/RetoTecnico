@@ -8,8 +8,8 @@
     </div>
 
     <div v-if="dropdownOpen"
-      class="dropdown-menu absolute mt-2 w-full bg-white border rounded-md shadow-lg overflow-hidden z-10"
-      style="top: 100%; left: 0; max-width: 80vw;"> <!-- Cambiado a width: 100% y añadido max-width -->
+      class="dropdown-menu absolute mt-2 bg-white border rounded-md shadow-lg overflow-hidden z-10"
+      style="top: 100%; left: 0; max-width: 80vw;">
 
       <!-- Utiliza un solo contenedor en lugar de un grid en pantallas pequeñas -->
       <div class="sm:grid sm:grid-cols-3 sm:gap-2 p-2">
@@ -70,6 +70,13 @@ export default {
 
   .continent-filter {
     margin-left: 0.5rem;
+  }
+}
+
+/* Estilos específicos para pantallas medianas y grandes */
+@media (min-width: 769px) {
+  .dropdown-menu {
+    width: 300px; /* Puedes ajustar el tamaño según tus necesidades */
   }
 }
 </style>
