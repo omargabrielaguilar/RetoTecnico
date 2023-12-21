@@ -1,18 +1,38 @@
 # Vue 3 + TypeScript + Vite
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Este reto tecnico esta realizado con Vue 3, TypeScript en Vite y GraphQL con ApolloClient. El reto tecnico utiliza el  formato `<script setup>` de Vue 3 para los componentes de archivo único (SFC).
 
-## Recommended IDE Setup
+## Tecnologías y Librerías Utilizadas
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+Este proyecto utiliza las siguientes tecnologías y librerías:
 
-## Type Support For `.vue` Imports in TS
+- **Vue.js 3:** El framework JavaScript progresivo para construir interfaces de usuario.
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+- **Vue Router:** Enrutador oficial para aplicaciones Vue.js.
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+- **Apollo Client:** Cliente GraphQL completamente funcional y compatible con Vue.
 
-1. Disable the built-in TypeScript Extension
-   1. Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-   2. Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+- **@vue/apollo-composable:** Composable Vue para Apollo Client.
+
+- **Axios:** Cliente HTTP basado en promesas para el navegador y Node.js.
+
+- **GraphQL:** Lenguaje de consulta y manipulación de datos para tu API.
+
+- **GraphQL Tag:** Herramienta para usar plantillas de cadena de texto como consultas GraphQL.
+
+Estas dependencias han sido configuradas para garantizar la compatibilidad y el funcionamiento adecuado del proyecto. Puedes consultar los archivos `package.json` y `vite.config.js` para obtener más detalles sobre la configuración y las versiones utilizadas.
+
+## Apis
+
+Ademas de usar pixabay api para obtener las imagenes de cada pais
+y https://countries.trevorblades.com/  para trabajar con las consultas de graphql
+
+## Instalación y Ejecución
+
+Para comenzar, instala las dependencias con:
+
+```bash
+npm i
+
+npm run dev
+```
