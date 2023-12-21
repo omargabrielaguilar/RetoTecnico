@@ -1,52 +1,61 @@
 <template>
   <div class="home-container">
+    <SearchCountry :countries="countries" :updateSearchTerm="updateSearchTerm" @select-country="openCountryCard" />
+
     <div v-if="loading">Cargando...</div>
     <div v-else class="grid grid-cols-3 gap-1">
-      <CountryListCard v-for="country in countries" :key="country.code" :country="country" class="col-span-1"
-        @click="openCountryCard(country)" />
+      <CountryListCard
+        v-for="country in displayList"
+        :key="country.code"
+        :country="country"
+        @click="openCountryCard(country)"
+      />
       <CountryCard v-if="selectedCountryDetails" :country="selectedCountryDetails" @close="closeCountryCard" />
     </div>
   </div>
 </template>
 
 <script>
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, onMounted, onUnmounted, computed } from "vue";
 import { useQuery } from "@vue/apollo-composable";
 import gql from "graphql-tag";
 import CountryListCard from "@/components/CountryListCard.vue";
 import CountryCard from "@/components/CountryCard.vue";
+import SearchCountry from "@/components/SearchCountry.vue";
 import "@/main.css";
 
 const COUNTRIES_QUERY = gql`
-query {
-  countries {
-    code
-    name
-    continent {
-      name
-    }
-    emoji
-    capital
-    languages {
-      name
-    }
-    currency
-    states {
+  query {
+    countries {
       code
       name
+      continent {
+        name
+      }
+      emoji
+      capital
+      languages {
+        name
+      }
+      currency
+      states {
+        code
+        name
+      }
     }
   }
-}
 `;
 
 export default {
   components: {
     CountryListCard,
     CountryCard,
+    SearchCountry,
   },
   setup() {
     const countries = ref([]);
     const selectedCountryDetails = ref(null);
+    const searchTerm = ref("");
     const { loading, onResult } = useQuery(COUNTRIES_QUERY);
 
     onMounted(() => {
@@ -66,9 +75,26 @@ export default {
       selectedCountryDetails.value = null;
     };
 
+    const displayList = computed(() => {
+      const filteredCountriesSet = new Set(
+        searchTerm.value
+          ? countries.value.filter((country) =>
+              country.name.toLowerCase().includes(searchTerm.value.toLowerCase())
+            )
+          : countries.value
+      );
+
+      return Array.from(filteredCountriesSet);
+    });
+
+    const updateSearchTerm = (term) => {
+      searchTerm.value = term;
+    };
+
     // Limpiamos la selección al salir del componente
     onUnmounted(() => {
       selectedCountryDetails.value = null;
+      updateSearchTerm(""); // Limpiar término de búsqueda al salir
     });
 
     return {
@@ -77,6 +103,9 @@ export default {
       selectedCountryDetails,
       openCountryCard,
       closeCountryCard,
+      searchTerm,
+      updateSearchTerm,
+      displayList,
     };
   },
 };

@@ -1,5 +1,5 @@
 <template>
-  <div class="country-card" @click="$emit('click', country)">
+  <div class="country-card" :class="{ filtered: filtered }" @click="$emit('click', country)">
     <div class="relative h-0" style="padding-bottom: 56.25%;">
       <img :src="countryImage" alt="Country Image" class="absolute inset-0 w-full h-full object-cover rounded-tl-2xl rounded-tr-2xl" />
     </div>
@@ -48,10 +48,6 @@ export default {
       countryImage,
     };
   },
-  
-};
-const closeCountryCard = () => {
-  selectedCountryDetails.value = null;
 };
 </script>
 

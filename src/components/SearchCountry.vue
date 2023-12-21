@@ -1,103 +1,81 @@
 <template>
-    <div class="search-country">
-      <input v-model="searchTerm" type="text" placeholder="Buscar país..." @input="handleSearch" />
-      <div v-if="searchTerm" class="search-results">
-        <CountryListCard
-          v-for="country in filteredCountries"
-          :key="country.code"
-          :country="country"
-          @click="selectCountry(country)"
-        />
-      </div>
+    <div class="search-country flex items-center justify-center mt-8 mb-4">
+      <input
+        v-model="searchTerm"
+        type="text"
+        placeholder="País..."
+        class="w-96 py-3 px-4 border rounded-l-lg focus:outline-none focus:border-blue-500"
+        @input="handleInput"
+      />
+      <button
+        class="bg-blue-500 text-white py-3 px-4 rounded-r-md"
+        @click="handleSearch"
+      >
+        Buscar
+      </button>
     </div>
   </template>
   
   <script>
-  import { ref, onMounted, computed } from "vue";
-  import { useQuery } from "@vue/apollo-composable";
-  import gql from "graphql-tag";
+  import { ref, computed, watch } from "vue";
   import CountryListCard from "@/components/CountryListCard.vue";
-  
-  const COUNTRIES_QUERY = gql`
-    query {
-      countries {
-        code
-        name
-      }
-    }
-  `;
   
   export default {
     components: {
       CountryListCard,
     },
-    setup(props, { emit }) {
+    props: {
+      placeholder: String,
+      countries: Array,
+      onSelectCountry: Function,
+      updateSearchTerm: Function,
+    },
+    setup(props) {
       const searchTerm = ref("");
-      const countries = ref([]);
-      const { onResult } = useQuery(COUNTRIES_QUERY);
-  
-      onMounted(() => {
-        onResult((result) => {
-          if (result.data && result.data.countries) {
-            countries.value = result.data.countries;
-          }
-        });
-      });
   
       const filteredCountries = computed(() => {
-        return countries.value.filter((country) =>
-          country.name.toLowerCase().includes(searchTerm.value.toLowerCase())
+        return (
+          props.countries &&
+          props.countries.filter((country) =>
+            country.name.toLowerCase().includes(searchTerm.value.toLowerCase())
+          )
         );
       });
   
-      const handleSearch = () => {
-        // No es necesario implementar lógica aquí, ya que la reactividad se encarga del filtrado
+      const handleInput = () => {
+        props.onSelectCountry(null);
+        props.updateSearchTerm(searchTerm.value);
       };
   
-      const selectCountry = (country) => {
-        emit("select-country", country);
-        searchTerm.value = ""; // Limpia el término de búsqueda después de seleccionar un país
+      const handleSearch = () => {
+        // Puedes realizar acciones adicionales al hacer clic en el botón de búsqueda si es necesario
+        // Por ahora, simplemente actualiza el término de búsqueda
+        props.updateSearchTerm(searchTerm.value);
       };
+  
+      // Limpiar el término de búsqueda cuando se cierra la tarjeta del país
+      watch(
+        () => searchTerm.value,
+        (newVal, oldVal) => {
+          if (!newVal && oldVal) {
+            // Si se borra el término de búsqueda, restablecer la lista completa
+            props.onSelectCountry(null);
+          }
+        }
+      );
   
       return {
         searchTerm,
         filteredCountries,
+        handleInput,
         handleSearch,
-        selectCountry,
       };
     },
   };
   </script>
   
   <style scoped>
-  .search-country {
-    margin-bottom: 20px;
-  }
-  
-  .search-results {
-    position: absolute;
-    z-index: 1;
-    background-color: white;
-    width: 100%;
-    border: 1px solid #ccc;
-    max-height: 200px;
-    overflow-y: auto;
-  }
-  
-  ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  li {
-    cursor: pointer;
-    padding: 5px;
-    border: 1px solid #ccc;
-    margin-bottom: 5px;
-  }
-  
-  li:hover {
-    background-color: #f0f0f0;
-  }
+  /* Estilos del componente de búsqueda aquí */
+  /* Puedes agregar estilos adicionales según tus necesidades */
   </style>
   
