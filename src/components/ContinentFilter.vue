@@ -8,15 +8,14 @@
     </div>
 
     <div v-if="dropdownOpen"
-      class="dropdown-menu absolute mt-2 w-60 bg-white border rounded-md shadow-lg overflow-hidden z-10"
-      style="top: 100%; left: 0;">
+      class="dropdown-menu absolute mt-2 w-80 bg-white border rounded-md shadow-lg overflow-hidden z-10"
+      style="top: 100%; left: 1rem;"> <!-- Añade margin-left aquí -->
       <div class="grid grid-cols-3 gap-2 p-2">
-        <!-- Añade la opción "Todos los continentes" -->
         <div @click="selectContinent('')" class="text-center cursor-pointer">
           <span class="text-sm">?</span>
         </div>
-        <div v-for="continent in continents" :key="continent" @click="selectContinent(continent)" class="text-center cursor-pointer">
-          <img class="w-8 h-8 rounded-full mx-auto mb-2" :src="getContinentImage(continent)" alt="Continent Image" />
+        <div v-for="continent in continents" :key="continent" @click="selectContinent(continent)"
+          class="text-center cursor-pointer">
           <span class="text-sm">{{ continent }}</span>
         </div>
       </div>
@@ -46,26 +45,18 @@ export default {
       dropdownOpen.value = false;
     };
 
-    const getContinentImage = (continent) => {
-      if (continent === "") {
-        return `https://via.placeholder.com/50?text=?`;
-      } else {
-        // Ruta de ejemplo para imágenes de cada continente
-        return `/images/${continent.toLowerCase()}.png`;
-      }
-    };
-
     return {
       selectedContinent,
       dropdownOpen,
       toggleDropdown,
       selectContinent,
-      getContinentImage,
     };
   },
 };
 </script>
 
 <style scoped>
-/* Estilos adicionales según tus necesidades */
+.continent-filter{
+  margin-left: 1rem; 
+}
 </style>
