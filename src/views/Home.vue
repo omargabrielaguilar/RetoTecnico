@@ -2,21 +2,19 @@
   <div class="home-container">
     <div v-if="loading">Cargando...</div>
     <div v-else class="grid grid-cols-3 gap-1">
-      <CountryListCard
-        v-for="country in countries"
-        :key="country.code"
-        :country="country"
-        class="col-span-1"
-      />
+      <CountryListCard v-for="country in countries" :key="country.code" :country="country" class="col-span-1"
+        @click="openCountryCard(country)" />
+      <CountryCard v-if="selectedCountry" :country="selectedCountry" @close="closeCountryCard" />
     </div>
   </div>
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed, onUnmounted } from "vue";
 import { useQuery } from "@vue/apollo-composable";
 import gql from "graphql-tag";
 import CountryListCard from "@/components/CountryListCard.vue";
+import CountryCard from "@/components/CountryCard.vue";
 import "@/main.css";
 
 const COUNTRIES_QUERY = gql`
@@ -35,26 +33,43 @@ const COUNTRIES_QUERY = gql`
 export default {
   components: {
     CountryListCard,
+    CountryCard,
   },
   setup() {
-    // Inicializamos countries como ref con un array vacío por defecto
     const countries = ref([]);
+    const selectedCountry = ref(null);
 
-    const { loading, error, onResult } = useQuery(COUNTRIES_QUERY);
+    const { loading, onResult } = useQuery(COUNTRIES_QUERY);
 
     onMounted(() => {
-      // Actualizar la referencia countries cuando la consulta se completa
       onResult((result) => {
-        // Verificamos si result.data y result.data.countries están definidos
         if (result.data && result.data.countries) {
           countries.value = result.data.countries;
         }
       });
     });
 
+    const openCountryCard = (country) => {
+      console.log('Selected Country:', country);
+      selectedCountry.value = country;
+    };
+
+
+    const closeCountryCard = () => {
+      selectedCountry.value = null;
+    };
+
+    // Limpiamos la selección al salir del componente
+    onUnmounted(() => {
+      selectedCountry.value = null;
+    });
+
     return {
       countries,
       loading,
+      selectedCountry,
+      openCountryCard,
+      closeCountryCard,
     };
   },
 };
@@ -62,6 +77,7 @@ export default {
 
 <style scoped>
 .home-container {
-  margin-left: 20vw; /* Ajusta este valor según el ancho del Sidebar */
+  margin-left: 20vw;
+  /* Ajusta este valor según el ancho del Sidebar */
 }
 </style>
