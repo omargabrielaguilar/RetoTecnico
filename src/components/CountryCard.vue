@@ -13,8 +13,9 @@
             </div>
             <div class="details">
                 <p class="capital"><strong class="strong-title">Capital:</strong> {{ country.capital }}</p>
-                <p class="language"><strong class="strong-title">Lenguaje:</strong> {{ country.languages ? country.languages.map(lang =>
-                    lang.name).join(', ') : 'N/A' }}</p>
+                <p class="language"><strong class="strong-title">Lenguaje:</strong> {{ country.languages ?
+                    country.languages.map(lang =>
+                        lang.name).join(', ') : 'N/A' }}</p>
                 <p class="currency"><strong class="strong-title">Moneda:</strong> {{ country.currency }}</p>
                 <div v-if="country.states && country.states.length > 0" class="states">
                     <p class="state-title"> <strong class="strong-title">Estados:</strong></p>
@@ -61,6 +62,9 @@ onMounted(() => {
 </script>
   
 <style scoped>
+/* Media query para pantallas más pequeñas (p. ej., dispositivos móviles) */
+
+
 .country-card-sidebar {
     width: 22vw;
     padding: 16px;
@@ -75,6 +79,8 @@ onMounted(() => {
     flex-direction: column;
     align-items: center;
 }
+
+
 
 .image-container {
     width: 100%;
@@ -148,8 +154,22 @@ onMounted(() => {
     cursor: pointer;
 }
 
-.strong-title{
+.strong-title {
     color: #319de2;
+}
+
+
+@media (max-width: 768px) {
+    .country-card-sidebar {
+        width: 100%;
+        max-width: none;
+        /* Elimina el límite máximo en pantallas pequeñas */
+    }
+
+    .states {
+        /* Cambia esto a 100% para que se ajuste al contenido */
+        overflow-y: auto;
+    }
 }
 </style>
   

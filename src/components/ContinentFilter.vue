@@ -8,9 +8,11 @@
     </div>
 
     <div v-if="dropdownOpen"
-      class="dropdown-menu absolute mt-2 w-80 bg-white border rounded-md shadow-lg overflow-hidden z-10"
-      style="top: 100%; left: 1rem;"> <!-- Añade margin-left aquí -->
-      <div class="grid grid-cols-3 gap-2 p-2">
+      class="dropdown-menu absolute mt-2 w-full bg-white border rounded-md shadow-lg overflow-hidden z-10"
+      style="top: 100%; left: 0; max-width: 80vw;"> <!-- Cambiado a width: 100% y añadido max-width -->
+
+      <!-- Utiliza un solo contenedor en lugar de un grid en pantallas pequeñas -->
+      <div class="sm:grid sm:grid-cols-3 sm:gap-2 p-2">
         <div @click="selectContinent('')" class="text-center cursor-pointer">
           <span class="text-sm">?</span>
         </div>
@@ -56,7 +58,18 @@ export default {
 </script>
 
 <style scoped>
-.continent-filter{
-  margin-left: 1rem; 
+.continent-filter {
+  margin-left: 1rem;
+}
+
+/* Estilos específicos para pantallas pequeñas */
+@media (max-width: 768px) {
+  .dropdown-menu {
+    width: 100%;
+  }
+
+  .continent-filter {
+    margin-left: 0.5rem;
+  }
 }
 </style>

@@ -1,18 +1,20 @@
 <template>
-  <div class="search-country flex items-center justify-center mt-8 mb-4 relative">
-    <input
-      v-model="searchTerm"
-      type="text"
-      placeholder="País..."
-      class="w-96 py-3 px-4 border rounded-l-lg focus:outline-none focus:border-blue-500"
-      @input="handleInput"
-      @click="showContinentFilter"
-    />
-    <ContinentFilter
-      v-if="showContinentFilter"
-      :continents="continents"
-      :updateSelectedContinent="updateSelectedContinent"
-    />
+  <div class="search-country mt-8 mb-4 relative">
+    <div class="search-country-bar flex flex-col items-center ">
+      <input
+        v-model="searchTerm"
+        type="text"
+        placeholder="País..."
+        class="w-full py-3 px-4 border rounded-l-lg focus:outline-none focus:border-blue-500 mb-2"
+        @input="handleInput"
+        @click="showContinentFilter"
+      />
+      <ContinentFilter
+        v-if="showContinentFilter"
+        :continents="continents"
+        :updateSelectedContinent="updateSelectedContinent"
+      />
+    </div>
   </div>
 </template>
 
@@ -81,6 +83,25 @@ export default {
 </script>
 
 <style scoped>
-/* Estilos del componente de búsqueda aquí */
-/* Puedes agregar estilos adicionales según tus necesidades */
+.search-country {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Alinea verticalmente en el centro */
+    align-items: center;
+  }
+  .search-country-bar{
+    width: 70%;
+    border-radius: 2rem;
+  }
+  .search-country input {
+    width: 100%;
+    border-radius: 1rem;
+  }
+
+  @media (max-width: 768px) {
+    .search-country-bar{
+    width: 90%;
+    border-radius: 2rem;
+  }
+  }
 </style>

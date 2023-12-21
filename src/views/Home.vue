@@ -143,7 +143,13 @@ export default {
 
 <style scoped>
 .home-container {
+  /* Elimina el margen izquierdo en pantallas pequeñas */
   margin-left: 20vw;
-  /* Ajusta este valor según el ancho del Sidebar */
+}
+
+@media (max-width: 768px) {
+  .home-container {
+    margin-left: 0;
+  }
 }
 </style>
