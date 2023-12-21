@@ -1,14 +1,32 @@
 <template>
   <div class="home-container">
-    <SearchCountry :countries="countries" :updateSearchTerm="updateSearchTerm"
-      :updateSelectedContinent="updateSelectedContinent" @select-country="openCountryCard" />
+    <SearchCountry
+      :countries="countries"
+      :updateSearchTerm="updateSearchTerm"
+      :updateSelectedContinent="updateSelectedContinent"
+      @select-country="openCountryCard"
+      @input-click="handleInputClick"
+    />
 
     <div v-if="loading">Cargando...</div>
     <div v-else class="grid grid-cols-3 gap-1">
-      <CountryListCard v-for="country in displayList" :key="country.code" :country="country"
-        @click="openCountryCard(country)" />
-      <CountryCard v-if="selectedCountryDetails" :country="selectedCountryDetails" @close="closeCountryCard" />
+      <CountryListCard
+        v-for="country in displayList"
+        :key="country.code"
+        :country="country"
+        @click="openCountryCard(country)"
+      />
+      <CountryCard
+        v-if="selectedCountryDetails"
+        :country="selectedCountryDetails"
+        @close="closeCountryCard"
+      />
     </div>
+    <ContinentFilter
+      v-if="showContinentFilter"
+      :continents="continents"
+      :updateSelectedContinent="updateSelectedContinent"
+    />
   </div>
 </template>
 
