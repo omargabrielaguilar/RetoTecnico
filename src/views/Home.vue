@@ -118,10 +118,9 @@ export default {
       searchTerm.value = term;
     };
 
-    // Limpiamos la selección al salir del componente
     onUnmounted(() => {
       selectedCountryDetails.value = null;
-      updateSearchTerm(""); // Limpiar término de búsqueda al salir
+      updateSearchTerm(""); 
     });
 
     return {
@@ -143,7 +142,6 @@ export default {
 
 <style scoped>
 .home-container {
-  /* Elimina el margen izquierdo en pantallas pequeñas */
   margin-left: 20vw;
 }
 

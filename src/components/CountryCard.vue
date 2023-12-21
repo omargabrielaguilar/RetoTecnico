@@ -1,4 +1,5 @@
 <template>
+    <!-- Componente de tarjeta de país para la barra lateral -->
     <div class="country-card-sidebar">
         <div class="image-container">
             <img v-if="countryImage" :src="countryImage" alt="Country Image" class="country-image" />
@@ -11,12 +12,13 @@
                     <p class="continent">{{ country.continent.name }}</p>
                 </div>
             </div>
+            <!-- Detalles del país: capital, idioma, moneda y estados si aplican -->
             <div class="details">
                 <p class="capital"><strong class="strong-title">Capital:</strong> {{ country.capital }}</p>
                 <p class="language"><strong class="strong-title">Lenguaje:</strong> {{ country.languages ?
-                    country.languages.map(lang =>
-                        lang.name).join(', ') : 'N/A' }}</p>
+                    country.languages.map(lang => lang.name).join(', ') : 'N/A' }}</p>
                 <p class="currency"><strong class="strong-title">Moneda:</strong> {{ country.currency }}</p>
+                <!-- Lista de estados si aplican -->
                 <div v-if="country.states && country.states.length > 0" class="states">
                     <p class="state-title"> <strong class="strong-title">Estados:</strong></p>
                     <ul class="state-list">
@@ -25,6 +27,7 @@
                 </div>
             </div>
         </div>
+        <!-- Botón de cierre -->
         <button class="close-button" @click="closeCountryCard">X</button>
     </div>
 </template>
@@ -38,10 +41,12 @@ const countryImage = ref("");
 const props = defineProps(["country"]);
 const emit = defineEmits();
 
+// Función para cerrar la tarjeta de país
 const closeCountryCard = () => {
     emit("close");
-}
+};
 
+// Función para obtener la imagen del país desde Pixabay
 const fetchCountryImage = async () => {
     try {
         const response = await axios.get(
@@ -56,15 +61,13 @@ const fetchCountryImage = async () => {
     }
 };
 
+// Se ejecuta al montar el componente
 onMounted(() => {
     fetchCountryImage();
 });
 </script>
   
 <style scoped>
-/* Media query para pantallas más pequeñas (p. ej., dispositivos móviles) */
-
-
 .country-card-sidebar {
     width: 22vw;
     padding: 16px;
@@ -80,12 +83,9 @@ onMounted(() => {
     align-items: center;
 }
 
-
-
 .image-container {
     width: 100%;
     height: 200px;
-    /* Ajusta según sea necesario */
     overflow: hidden;
     border-radius: 15px;
 }
@@ -96,6 +96,7 @@ onMounted(() => {
     object-fit: cover;
 }
 
+/* Estilos para el encabezado con bandera, nombre del país y continente */
 .header {
     width: 100%;
     margin-top: 1rem;
@@ -118,16 +119,15 @@ onMounted(() => {
 
 .continent {
     color: #676767;
-    /* Gris */
 }
 
 .details {
     text-align: left;
 }
 
+/* Estilos para los detalles específicos del país */
 .details p {
     color: #676767;
-    /* Azul */
 }
 
 .states {
@@ -137,7 +137,6 @@ onMounted(() => {
 
 .state-title {
     color: #3498db;
-    /* Azul */
     font-size: 1rem;
 }
 
@@ -158,16 +157,15 @@ onMounted(() => {
     color: #319de2;
 }
 
-
+/* Estilos específicos para pantallas pequeñas */
 @media (max-width: 768px) {
     .country-card-sidebar {
         width: 100%;
         max-width: none;
-        /* Elimina el límite máximo en pantallas pequeñas */
     }
 
+    /* Ajuste de estilos para la sección de estados en pantallas pequeñas */
     .states {
-        /* Cambia esto a 100% para que se ajuste al contenido */
         overflow-y: auto;
     }
 }

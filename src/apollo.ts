@@ -2,14 +2,14 @@
  * Este archivo apollo.ts contiene la configuración para crear un cliente Apollo que se utilizará para realizar consultas GraphQL a la API 'https://countries.trevorblades.com/'.
  */
 
-import { provide } from 'vue';
-import { DefaultApolloClient } from '@vue/apollo-composable';
-import { ApolloClient, InMemoryCache } from '@apollo/client/core';
+import { provide } from "vue";
+import { DefaultApolloClient } from "@vue/apollo-composable";
+import { ApolloClient, InMemoryCache } from "@apollo/client/core";
 
 export const createApollo = async (): Promise<ApolloClient<unknown>> => {
   // Crear una instancia de Apollo Client con la URI de la API y una caché en memoria
   const apolloClient = new ApolloClient({
-    uri: 'https://countries.trevorblades.com/',
+    uri: "https://countries.trevorblades.com/",
     cache: new InMemoryCache(),
   });
 

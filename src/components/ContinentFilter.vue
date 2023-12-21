@@ -1,5 +1,6 @@
 <template>
   <div class="relative inline-block">
+    <!-- Barra de filtro y etiqueta seleccionada -->
     <div class="continent-filter flex items-center space-x-2 cursor-pointer" @click="toggleDropdown">
       <span>{{ selectedContinent ? selectedContinent : 'Todos los continentes' }}</span>
       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -7,15 +8,17 @@
       </svg>
     </div>
 
-    <div v-if="dropdownOpen"
-      class="dropdown-menu absolute mt-2 bg-white border rounded-md shadow-lg overflow-hidden z-10"
+    <!-- Menú desplegable de continentes -->
+    <div v-if="dropdownOpen" class="dropdown-menu absolute mt-2 bg-white border rounded-md shadow-lg overflow-hidden z-10"
       style="top: 100%; left: 0; max-width: 80vw;">
 
-      <!-- Utiliza un solo contenedor en lugar de un grid en pantallas pequeñas -->
+      <!-- Trabajando con grid y tailwind -->
       <div class="sm:grid sm:grid-cols-3 sm:gap-2 p-2">
+        <!-- Elemento para seleccionar 'Todos los continentes' -->
         <div @click="selectContinent('')" class="text-center cursor-pointer">
           <span class="text-sm">?</span>
         </div>
+        <!-- Elementos para seleccionar continentes específicos -->
         <div v-for="continent in continents" :key="continent" @click="selectContinent(continent)"
           class="text-center cursor-pointer">
           <span class="text-sm">{{ continent }}</span>
@@ -30,17 +33,19 @@ import { ref } from "vue";
 
 export default {
   props: {
-    continents: Array,
-    updateSelectedContinent: Function,
+    continents: Array, // Propiedad que recibe la lista de continentes
+    updateSelectedContinent: Function, // Función para actualizar el continente seleccionado
   },
   setup(props) {
     const selectedContinent = ref("");
     const dropdownOpen = ref(false);
 
+    // Función para alternar la visibilidad del menú desplegable
     const toggleDropdown = () => {
       dropdownOpen.value = !dropdownOpen.value;
     };
 
+    // Función para seleccionar un continente y cerrar el menú desplegable
     const selectContinent = (continent) => {
       selectedContinent.value = continent;
       props.updateSelectedContinent(continent);
@@ -62,7 +67,7 @@ export default {
   margin-left: 1rem;
 }
 
-/* Estilos específicos para pantallas pequeñas */
+/* Enfoque en diseño responsivo */
 @media (max-width: 768px) {
   .dropdown-menu {
     width: 100%;
@@ -73,10 +78,9 @@ export default {
   }
 }
 
-/* Estilos específicos para pantallas medianas y grandes */
 @media (min-width: 769px) {
   .dropdown-menu {
-    width: 300px; /* Puedes ajustar el tamaño según tus necesidades */
+    width: 300px;
   }
 }
 </style>
