@@ -14,14 +14,17 @@
 <script>
 export default {
   methods: {
+    // Navegar a la página de inicio y muestra un mensaje de registro
     navigateToHome() {
       this.$router.push('/');
       console.log('Navegar a la página de inicio');
     },
+    // Navegara la vista con el número proporcionado y muestra un mensaje de registro
     navigateToView(viewNumber) {
       console.log(`Navegar a Vista ${viewNumber}`);
       this.$router.push(`/vista/${viewNumber}`);
     },
+    // Verificar si la ruta actual coincide con la ruta proporcionada utilizando $route, esto más que todo cuando este en la vista que le corresponde, esta parte estara activa con el background color correspondiente
     isRouteActive(route) {
       return this.$route.path === route;
     },
