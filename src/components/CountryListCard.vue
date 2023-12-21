@@ -48,6 +48,10 @@ export default {
       countryImage,
     };
   },
+  
+};
+const closeCountryCard = () => {
+  selectedCountryDetails.value = null;
 };
 </script>
 

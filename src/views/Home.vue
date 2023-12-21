@@ -4,13 +4,13 @@
     <div v-else class="grid grid-cols-3 gap-1">
       <CountryListCard v-for="country in countries" :key="country.code" :country="country" class="col-span-1"
         @click="openCountryCard(country)" />
-      <CountryCard v-if="selectedCountry" :country="selectedCountry" @close="closeCountryCard" />
+      <CountryCard v-if="selectedCountryDetails" :country="selectedCountryDetails" @close="closeCountryCard" />
     </div>
   </div>
 </template>
 
 <script>
-import { ref, onMounted, computed, onUnmounted } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import { useQuery } from "@vue/apollo-composable";
 import gql from "graphql-tag";
 import CountryListCard from "@/components/CountryListCard.vue";
@@ -18,16 +18,25 @@ import CountryCard from "@/components/CountryCard.vue";
 import "@/main.css";
 
 const COUNTRIES_QUERY = gql`
-  query {
-    countries {
+query {
+  countries {
+    code
+    name
+    continent {
+      name
+    }
+    emoji
+    capital
+    languages {
+      name
+    }
+    currency
+    states {
       code
       name
-      continent {
-        name
-      }
-      emoji
     }
   }
+}
 `;
 
 export default {
@@ -37,8 +46,7 @@ export default {
   },
   setup() {
     const countries = ref([]);
-    const selectedCountry = ref(null);
-
+    const selectedCountryDetails = ref(null);
     const { loading, onResult } = useQuery(COUNTRIES_QUERY);
 
     onMounted(() => {
@@ -50,24 +58,23 @@ export default {
     });
 
     const openCountryCard = (country) => {
-      console.log('Selected Country:', country);
-      selectedCountry.value = country;
+      console.log("Selected Country:", country);
+      selectedCountryDetails.value = country;
     };
 
-
     const closeCountryCard = () => {
-      selectedCountry.value = null;
+      selectedCountryDetails.value = null;
     };
 
     // Limpiamos la selección al salir del componente
     onUnmounted(() => {
-      selectedCountry.value = null;
+      selectedCountryDetails.value = null;
     });
 
     return {
       countries,
       loading,
-      selectedCountry,
+      selectedCountryDetails,
       openCountryCard,
       closeCountryCard,
     };
