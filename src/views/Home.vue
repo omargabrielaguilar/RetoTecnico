@@ -13,10 +13,11 @@
 </template>
 
 <script>
+import { ref, onMounted } from "vue";
 import { useQuery } from "@vue/apollo-composable";
 import gql from "graphql-tag";
 import CountryListCard from "@/components/CountryListCard.vue";
-import '@/main.css';
+import "@/main.css";
 
 const COUNTRIES_QUERY = gql`
   query {
@@ -36,12 +37,23 @@ export default {
     CountryListCard,
   },
   setup() {
-    const { result, loading, error } = useQuery(COUNTRIES_QUERY);
+    // Inicializamos countries como ref con un array vacío por defecto
+    const countries = ref([]);
 
-    // ... (resto del código)
+    const { loading, error, onResult } = useQuery(COUNTRIES_QUERY);
+
+    onMounted(() => {
+      // Actualizar la referencia countries cuando la consulta se completa
+      onResult((result) => {
+        // Verificamos si result.data y result.data.countries están definidos
+        if (result.data && result.data.countries) {
+          countries.value = result.data.countries;
+        }
+      });
+    });
 
     return {
-      countries: result.value?.countries || [],
+      countries,
       loading,
     };
   },

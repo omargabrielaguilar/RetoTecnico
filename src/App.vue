@@ -1,7 +1,8 @@
+<!-- App.vue -->
 <template>
   <div id="app">
     <Sidebar />
-    <router-view  class="content"/>
+    <router-view class="content" />
   </div>
 </template>
 
@@ -28,7 +29,6 @@ body {
 
 .content {
   flex-grow: 1;
-  overflow: auto; 
+  overflow: auto;
 }
-
 </style>
