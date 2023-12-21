@@ -1,15 +1,12 @@
 <template>
   <div class="home-container">
-    <SearchCountry :countries="countries" :updateSearchTerm="updateSearchTerm" @select-country="openCountryCard" />
+    <SearchCountry :countries="countries" :updateSearchTerm="updateSearchTerm"
+      :updateSelectedContinent="updateSelectedContinent" @select-country="openCountryCard" />
 
     <div v-if="loading">Cargando...</div>
     <div v-else class="grid grid-cols-3 gap-1">
-      <CountryListCard
-        v-for="country in displayList"
-        :key="country.code"
-        :country="country"
-        @click="openCountryCard(country)"
-      />
+      <CountryListCard v-for="country in displayList" :key="country.code" :country="country"
+        @click="openCountryCard(country)" />
       <CountryCard v-if="selectedCountryDetails" :country="selectedCountryDetails" @close="closeCountryCard" />
     </div>
   </div>
@@ -21,7 +18,6 @@ import { useQuery } from "@vue/apollo-composable";
 import gql from "graphql-tag";
 import CountryListCard from "@/components/CountryListCard.vue";
 import CountryCard from "@/components/CountryCard.vue";
-import ContinentFilter from "@/components/ContinentFilter.vue";
 import SearchCountry from "@/components/SearchCountry.vue";
 import "@/main.css";
 
@@ -57,6 +53,8 @@ export default {
     const countries = ref([]);
     const selectedCountryDetails = ref(null);
     const searchTerm = ref("");
+    const selectedContinent = ref("");
+
     const { loading, onResult } = useQuery(COUNTRIES_QUERY);
 
     onMounted(() => {
@@ -76,16 +74,26 @@ export default {
       selectedCountryDetails.value = null;
     };
 
+    const updateSelectedContinent = (continent) => {
+      selectedContinent.value = continent;
+    };
+
     const displayList = computed(() => {
       const filteredCountriesSet = new Set(
         searchTerm.value
           ? countries.value.filter((country) =>
-              country.name.toLowerCase().includes(searchTerm.value.toLowerCase())
-            )
+            country.name.toLowerCase().includes(searchTerm.value.toLowerCase())
+          )
           : countries.value
       );
 
-      return Array.from(filteredCountriesSet);
+      const filteredByContinent = selectedContinent.value
+        ? Array.from(filteredCountriesSet).filter(
+          (country) => country.continent.name === selectedContinent.value
+        )
+        : Array.from(filteredCountriesSet);
+
+      return filteredByContinent;
     });
 
     const updateSearchTerm = (term) => {
@@ -107,9 +115,12 @@ export default {
       searchTerm,
       updateSearchTerm,
       displayList,
+      selectedContinent,
+      updateSelectedContinent,
     };
   },
 };
+
 </script>
 
 <style scoped>

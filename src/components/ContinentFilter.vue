@@ -21,6 +21,7 @@ export default {
     const selectedContinent = ref("");
 
     const handleContinentChange = () => {
+      console.log("Selected Continent in ContinentFilter:", selectedContinent.value);
       props.updateSelectedContinent(selectedContinent.value);
     };
 

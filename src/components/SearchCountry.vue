@@ -1,17 +1,10 @@
 <template>
   <div class="search-country flex items-center justify-center mt-8 mb-4">
-    <input
-      v-model="searchTerm"
-      type="text"
-      placeholder="País..."
-      class="w-96 py-3 px-4 border rounded-l-lg focus:outline-none focus:border-blue-500"
-      @input="handleInput"
-    />
-    <ContinentFilter :continents="continents" @select-continent="handleContinentSelect" />
-    <button
-      class="bg-blue-500 text-white py-3 px-4 rounded-r-md"
-      @click="handleSearch"
-    >
+    <input v-model="searchTerm" type="text" placeholder="País..."
+      class="w-96 py-3 px-4 border rounded-l-lg focus:outline-none focus:border-blue-500" @input="handleInput" />
+    <ContinentFilter :continents="continents" :updateSelectedContinent="updateSelectedContinent"  />
+
+    <button class="bg-blue-500 text-white py-3 px-4 rounded-r-md" @click="handleSearch">
       Buscar
     </button>
   </div>
@@ -51,6 +44,7 @@ export default {
     };
 
     const handleContinentSelect = (continent) => {
+      console.log("Selected Continent in SearchCountry:", continent);
       props.updateSelectedContinent(continent);
     };
 
