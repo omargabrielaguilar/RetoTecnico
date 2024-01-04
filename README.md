@@ -1,6 +1,6 @@
 # Vue 3 + TypeScript + Vite
 
-Este reto tecnico esta realizado con Vue 3, TypeScript en Vite y GraphQL con ApolloClient. El reto tecnico utiliza el  formato `<script setup>` de Vue 3 para los componentes de archivo único (SFC).
+Este proyecto esta realizado con Vue 3, TypeScript en Vite y GraphQL con ApolloClient. El proyecto utiliza el  formato `<script setup>` de Vue 3 para los componentes de archivo único (SFC).
 
 ## Tecnologías y Librerías Utilizadas
 
